@@ -10,7 +10,9 @@ class TestCountFragmentCombinations(unittest.TestCase):
     def test_multiple_ways(self):
         fragments = [12, 3, 4, 123, 34]
         message = 1234
-        self.assertEqual(count_fragment_combinations(fragments, message), 2)
+        # Possible combinations:
+        # [12, 34], [123, 4], [12, 3, 4]
+        self.assertEqual(count_fragment_combinations(fragments, message), 3)
 
     def test_no_possible_combinations(self):
         fragments = [5, 6, 7]

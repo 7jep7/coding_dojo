@@ -11,22 +11,23 @@ def equal_start(fragment, message):
 def count_fragment_combinations(fragments, message):
     """
     Given a list of integer fragments and a target integer message, count how many ways you can concatenate some of the fragments (in any order, using each at most once) to form the message.
-    For example, fragments = [1, 23, 4], message = 1234
-    Possible combinations: [1, 23, 4] => 1|23|4 = 1234
-    Return the count of such combinations.
     """
-    occurences = 0
-
-    for f in fragments:
-        if equal_start(f, message):
-            if f == message:
-                occurences += 1
+    message_str = str(message)
+    if not message_str:
+        return 1  # Successfully formed the message
+    if not fragments:
+        return 0
+    occurrences = 0
+    for i, f in enumerate(fragments):
+        frag_str = str(f)
+        if message_str.startswith(frag_str):
+            new_fragments = fragments[:i] + fragments[i+1:]
+            remainder = message_str[len(frag_str):]
+            if remainder == '':
+                occurrences += 1
             else:
-                new_fragments = fragments.copy()
-                new_fragments.remove(f)
-                occurences += count_fragment_combinations(new_fragments, int(str(message)[len(str(f)):]))
-
-    return occurences
+                occurrences += count_fragment_combinations(new_fragments, int(remainder))
+    return occurrences
 
 # The tests have been moved to test_basic_python.py for better structure and maintainability.
 
